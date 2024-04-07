@@ -1,9 +1,7 @@
 package net.fabric_extras.ranged_weapon.client;
 
-import net.fabric_extras.ranged_weapon.api.CustomBow;
-import net.fabric_extras.ranged_weapon.api.CustomCrossbow;
 import net.fabricmc.api.ClientModInitializer;
-import net.fabricmc.fabric.mixin.registry.sync.client.MinecraftClientMixin;
+import net.fabricmc.fabric.api.client.item.v1.ItemTooltipCallback;
 
 public class RangedWeaponAPIClient implements ClientModInitializer {
     /**
@@ -11,6 +9,9 @@ public class RangedWeaponAPIClient implements ClientModInitializer {
      */
     @Override
     public void onInitializeClient() {
+        ItemTooltipCallback.EVENT.register((itemStack, context, lines) -> {
+            TooltipHelper.updateTooltipText(itemStack, lines);
+        });
         // Calling these from MinecraftClient run, so all mod registrations are done
 //        for (var bow: CustomBow.instances) {
 //            ModelPredicateHelper.registerBowModelPredicates(bow);

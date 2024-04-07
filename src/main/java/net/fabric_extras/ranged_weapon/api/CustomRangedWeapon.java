@@ -1,7 +1,5 @@
 package net.fabric_extras.ranged_weapon.api;
 
-import net.projectile_damage.api.IProjectileWeapon;
-
 public interface CustomRangedWeapon {
     int getPullTime_RWA();
     void setPullTime_RWA(int pullTime);
@@ -15,11 +13,9 @@ public interface CustomRangedWeapon {
         if (config.velocity() != null) {
             float velocity = config.velocity();
             rangedWeapon.setVelocity_RWA(velocity);
-            ((IProjectileWeapon)this).setCustomLaunchVelocity((double) velocity);
         } else {
             rangedWeapon.setVelocity_RWA(0F);
-            ((IProjectileWeapon)this).setCustomLaunchVelocity(null);
         }
-        ((IProjectileWeapon)this).setProjectileDamage(config.damage());
+        ((RangedWeaponDamage)this).setRangedWeaponDamage(config.damage());
     }
 }

@@ -1,3 +1,8 @@
 {
+  "attribute.name.ranged_weapon.damage" : "Ranged Damage",
+  "attribute.name.ranged_weapon.haste" : "Ranged Speed",
+  "attribute.name.ranged_weapon.pull_time" : "sec Pull Time",
+  "item.modifiers.both_hands": "When Held:",
+  "effect.ranged_weapon.impact": "Impact",
   "item.ranged_weapon.pull_time": "%1$s sec Pull Time"
 }

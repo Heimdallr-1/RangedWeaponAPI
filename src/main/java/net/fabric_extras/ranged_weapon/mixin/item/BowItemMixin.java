@@ -4,9 +4,13 @@ import com.llamalad7.mixinextras.injector.WrapWithCondition;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import net.fabric_extras.ranged_weapon.api.CustomRangedWeapon;
+import net.fabric_extras.ranged_weapon.api.EntityAttributes_RangedWeapon;
+import net.fabric_extras.ranged_weapon.internal.DamageUtil;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.projectile.PersistentProjectileEntity;
 import net.minecraft.item.BowItem;
+import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -67,5 +71,25 @@ public class BowItemMixin implements CustomRangedWeapon {
             }
         }
         return true;
+    }
+
+    /**
+     * Apply custom damage
+     */
+    private static final float STANDARD_DAMAGE = 6;
+    private static final float STANDARD_VELOCITY = 3.0F;
+    @WrapOperation(method = "onStoppedUsing", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/World;spawnEntity(Lnet/minecraft/entity/Entity;)Z"))
+    private boolean applyCustomDamage(
+            // Mixin parameters
+            World instance, Entity entity, Operation<Boolean> original,
+            // Context parameters
+            ItemStack stack, World world, LivingEntity user, int remainingUseTicks) {
+        if (entity instanceof PersistentProjectileEntity projectile) {
+            var rangedDamage = user.getAttributeValue(EntityAttributes_RangedWeapon.DAMAGE.attribute);
+            var multiplier = DamageUtil.arrowDamageMultiplier(STANDARD_DAMAGE, rangedDamage, STANDARD_VELOCITY, customVelocity);
+            var finalDamage = projectile.getDamage() * multiplier;
+            projectile.setDamage(finalDamage);
+        }
+        return original.call(world, entity);
     }
 }

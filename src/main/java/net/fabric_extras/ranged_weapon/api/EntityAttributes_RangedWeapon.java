@@ -9,8 +9,8 @@ import java.util.ArrayList;
 public class EntityAttributes_RangedWeapon {
     public static final String NAMESPACE = "ranged_weapon";
     public static final ArrayList<Entry> all = new ArrayList<>();
-    private static Entry entry(String name, double baseValue) {
-        var entry = new Entry(name, baseValue);
+    private static Entry entry(String name, double baseValue, boolean tracked) {
+        var entry = new Entry(name, baseValue, tracked);
         all.add(entry);
         return entry;
     }
@@ -20,10 +20,10 @@ public class EntityAttributes_RangedWeapon {
         public final String translationKey;
         public final EntityAttribute attribute;
         private final double baseValue;
-        public Entry(String name, double baseValue) {
+        public Entry(String name, double baseValue, boolean tracked) {
             this.id = new Identifier(NAMESPACE, name);
             this.translationKey = "attribute.name." + NAMESPACE + "." + name;
-            this.attribute = new ClampedEntityAttribute(translationKey, baseValue, 0, 2048).setTracked(true);
+            this.attribute = new ClampedEntityAttribute(translationKey, baseValue, 0, 2048).setTracked(tracked);
             this.baseValue = baseValue;
         }
 
@@ -32,6 +32,6 @@ public class EntityAttributes_RangedWeapon {
         }
     }
 
-    public static final Entry DAMAGE = entry("damage", 0);
-    public static final Entry HASTE = entry("haste", 100);
+    public static final Entry DAMAGE = entry("damage", 0, true);
+    public static final Entry HASTE = entry("haste", 100, true);
 }

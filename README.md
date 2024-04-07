@@ -2,8 +2,6 @@
 
 ### 🏹 Making bows and crossbows has never been easier!
 
-⚠️ Dependency disclaimer: This mod depends on Projectile Damage Attribute. This will be fixed in the future, by merging the two mods.
-
 ## Features
 - [x] Bows and Crossbow construction
 - [x] Customizable weapon properties: damage, pull time, projectile velocity (optional)

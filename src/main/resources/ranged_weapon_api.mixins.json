@@ -6,6 +6,7 @@
   "mixins": [
     "attribute.EntityAttributesMixin",
     "attribute.LivingEntityMixin",
+    "attribute.StatusEffectsMixin",
     "item.BowItemMixin",
     "item.CrossbowItemMixin",
     "item.RangedWeaponItemMixin"

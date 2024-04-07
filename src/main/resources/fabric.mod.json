@@ -11,14 +11,14 @@
     "repo": "https://github.com/FabricExtras/RangedWeaponAPI"
   },
   "license": "MIT",
-  "icon": "assets/ranged_weapon_api/icon.png",
+  "icon": "assets/ranged_weapon/icon.png",
   "environment": "*",
   "entrypoints": {
     "client": [
       "net.fabric_extras.ranged_weapon.client.RangedWeaponAPIClient"
     ],
     "main": [
-      "net.fabric_extras.ranged_weapon.RangedWeaponAPI"
+      "net.fabric_extras.ranged_weapon.RangedWeaponMod"
     ]
   },
   "mixins": [

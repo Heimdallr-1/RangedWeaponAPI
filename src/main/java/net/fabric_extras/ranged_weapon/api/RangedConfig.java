@@ -1,5 +1,6 @@
 package net.fabric_extras.ranged_weapon.api;
 
+import net.fabric_extras.ranged_weapon.internal.ScalingUtil;
 import org.jetbrains.annotations.Nullable;
 
 /**
@@ -10,7 +11,7 @@ import org.jetbrains.annotations.Nullable;
  *                 Does not affect the projectile damage!
  */
 public record RangedConfig(int pull_time, float damage, float velocity) {
-    public static final RangedConfig EMPTY = new RangedConfig(0, 0, 0);
-    public static final RangedConfig BOW = new RangedConfig(20, 6, 0);
-    public static final RangedConfig CROSSBOW = new RangedConfig(25, 9, 0);
+    public static final RangedConfig EMPTY = new RangedConfig(20, 0, 0);
+    public static final RangedConfig BOW = new RangedConfig(20, (float) ScalingUtil.BOW_BASELINE.damage(), 0);
+    public static final RangedConfig CROSSBOW = new RangedConfig(25, (float) ScalingUtil.CROSSBOW_BASELINE.damage(), 0);
 }

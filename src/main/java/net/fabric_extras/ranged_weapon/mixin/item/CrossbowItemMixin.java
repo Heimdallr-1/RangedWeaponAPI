@@ -6,7 +6,7 @@ import net.fabric_extras.ranged_weapon.api.CrossbowMechanics;
 import net.fabric_extras.ranged_weapon.api.CustomRangedWeapon;
 import net.fabric_extras.ranged_weapon.api.EntityAttributes_RangedWeapon;
 import net.fabric_extras.ranged_weapon.api.RangedConfig;
-import net.fabric_extras.ranged_weapon.internal.DamageUtil;
+import net.fabric_extras.ranged_weapon.internal.ScalingUtil;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.projectile.PersistentProjectileEntity;
@@ -87,7 +87,7 @@ public class CrossbowItemMixin {
         if (entity instanceof PersistentProjectileEntity projectileEntity && item instanceof CustomRangedWeapon weapon) {
             var rangedDamage = shooter.getAttributeValue(EntityAttributes_RangedWeapon.DAMAGE.attribute);
             System.out.println("Ranged Damage: " + rangedDamage);
-            var multiplier = DamageUtil.arrowDamageMultiplier(STANDARD_DAMAGE, rangedDamage, STANDARD_VELOCITY, weapon.getRangedWeaponConfig().velocity());
+            var multiplier = ScalingUtil.arrowDamageMultiplier(STANDARD_DAMAGE, rangedDamage, STANDARD_VELOCITY, weapon.getRangedWeaponConfig().velocity());
             System.out.println("Multiplier: " + multiplier);
             var finalDamage = projectileEntity.getDamage() * multiplier;
             System.out.println("Final Damage: " + finalDamage);

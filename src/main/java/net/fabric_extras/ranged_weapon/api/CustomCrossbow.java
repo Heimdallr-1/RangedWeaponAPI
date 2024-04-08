@@ -17,8 +17,12 @@ public class CustomCrossbow extends CrossbowItem {
         instances.add(this);
     }
 
+    @Deprecated
     public void config(RangedConfig config) {
         ((CustomRangedWeapon) this).configure(config);
+    }
+    public void configure(RangedConfig config) {
+        ((CustomRangedWeapon) this).setRangedWeaponConfig(config);
     }
 
     private final Supplier<Ingredient> repairIngredientSupplier;

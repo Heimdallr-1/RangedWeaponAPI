@@ -2,7 +2,7 @@ package net.fabric_extras.ranged_weapon;
 
 import net.fabric_extras.ranged_weapon.api.CustomRangedWeapon;
 import net.fabric_extras.ranged_weapon.api.EntityAttributes_RangedWeapon;
-import net.fabric_extras.ranged_weapon.api.RangedWeaponDamage;
+import net.fabric_extras.ranged_weapon.api.RangedConfig;
 import net.fabric_extras.ranged_weapon.api.StatusEffects_RangedWeapon;
 import net.fabric_extras.ranged_weapon.internal.CustomStatusEffect;
 import net.fabricmc.api.ModInitializer;
@@ -17,9 +17,8 @@ public class RangedWeaponMod implements ModInitializer {
      */
     @Override
     public void onInitialize() {
-        ((CustomRangedWeapon) Items.BOW).setPullTime_RWA(20);
-        ((RangedWeaponDamage) Items.BOW).setRangedWeaponDamage(6);
-        ((CustomRangedWeapon) Items.CROSSBOW).setPullTime_RWA(25);
+        ((CustomRangedWeapon) Items.BOW).setRangedWeaponConfig(RangedConfig.BOW);
+        ((CustomRangedWeapon) Items.CROSSBOW).setRangedWeaponConfig(RangedConfig.CROSSBOW);
 
         var boostEffectBonusPerLevel = 0.1;
         StatusEffects_RangedWeapon.IMPACT.effect.addAttributeModifier(

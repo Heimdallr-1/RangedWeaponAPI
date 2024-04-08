@@ -21,7 +21,7 @@ public class TestMod implements ModInitializer {
                 new FabricItemSettings().maxDamage(300),
                 () -> Ingredient.ofItems(Items.GOLD_INGOT)
         );
-        bow.config(new RangedConfig(30, 9, null));
+        bow.configure(new RangedConfig(30, 9, 0));
         Registry.register(
                 Registries.ITEM,
                 new Identifier(NAMESPACE, "custom_longbow"),

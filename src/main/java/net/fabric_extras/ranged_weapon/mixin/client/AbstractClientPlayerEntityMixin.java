@@ -33,7 +33,7 @@ public class AbstractClientPlayerEntityMixin {
         var item = ((AbstractClientPlayerEntity)(Object)this).getActiveItem().getItem();
         if (CustomBow.instances.contains(item)) {
             // Override hardcoded pull time
-            return ((CustomRangedWeapon)item).getPullTime_RWA();
+            return ((CustomRangedWeapon)item).getRangedWeaponConfig().pull_time();
         } else {
             return value;
         }

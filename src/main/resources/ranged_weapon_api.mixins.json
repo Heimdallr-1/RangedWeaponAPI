@@ -4,6 +4,7 @@
   "package": "net.fabric_extras.ranged_weapon.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
+    "PersistentProjectileEntityMixin",
     "attribute.EntityAttributesMixin",
     "attribute.LivingEntityMixin",
     "attribute.StatusEffectsMixin",

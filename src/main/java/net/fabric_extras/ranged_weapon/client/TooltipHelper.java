@@ -154,7 +154,7 @@ public class TooltipHelper {
             if (itemStack.isOf(Items.BOW)) {
                 return 20;
             } else if (item instanceof CustomRangedWeapon customBow) {
-                return customBow.getPullTime_RWA();
+                return customBow.getRangedWeaponConfig().pull_time();
             }
         }
         return 0;

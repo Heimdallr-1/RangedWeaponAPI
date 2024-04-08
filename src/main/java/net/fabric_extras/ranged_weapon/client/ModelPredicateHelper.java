@@ -14,7 +14,7 @@ public class ModelPredicateHelper {
             if (entity == null) {
                 return 0.0F;
             } else {
-                return entity.getActiveItem() != stack ? 0.0F : (float)(stack.getMaxUseTime() - entity.getItemUseTimeLeft()) / ((float) ((CustomRangedWeapon)bow).getPullTime_RWA());
+                return entity.getActiveItem() != stack ? 0.0F : (float)(stack.getMaxUseTime() - entity.getItemUseTimeLeft()) / ((float) ((CustomRangedWeapon)bow).getRangedWeaponConfig().pull_time());
             }
         });
         ModelPredicateProviderRegistry.register(bow, new Identifier("pulling"), (stack, world, entity, seed) -> {

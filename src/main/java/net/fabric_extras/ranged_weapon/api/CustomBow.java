@@ -18,9 +18,12 @@ public class CustomBow extends BowItem {
 
     private final Supplier<Ingredient> repairIngredientSupplier;
 
-
+    @Deprecated
     public void config(RangedConfig config) {
         ((CustomRangedWeapon) this).configure(config);
+    }
+    public void configure(RangedConfig config) {
+        ((CustomRangedWeapon) this).setRangedWeaponConfig(config);
     }
 
     @Override
@@ -28,3 +31,4 @@ public class CustomBow extends BowItem {
         return this.repairIngredientSupplier.get().test(ingredient) || super.canRepair(stack, ingredient);
     }
 }
+

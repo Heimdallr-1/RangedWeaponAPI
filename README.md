@@ -24,11 +24,18 @@
   - Example values: 50, -50% attack speed 
   - Example values: 200, +100% attack speed
 
+`/give @s leather_helmet{AttributeModifiers:[{AttributeName:"ranged_weapon:haste", Name:"testing", Amount:0.1, Operation:1,Slot:"head",UUID:[I; 66453, 79497594, -201177, -16957605]}]} 1`
+
 ![attribute_haste.png](.github/attribute_haste.png)
 
-Related status effects included.
+Each attribute has a corresponding status effect.
+
+`/effect give @p ranged_weapon:damage`
 
 ![status_effect_damage.png](.github/status_effect_damage.png)
+
+`/effect give @p ranged_weapon:haste`
+
 ![status_effect_haste.png](.github/status_effect_haste.png)
 
 ## Try it out

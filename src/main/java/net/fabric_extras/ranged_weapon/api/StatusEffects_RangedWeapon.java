@@ -26,6 +26,6 @@ public class StatusEffects_RangedWeapon {
         return entry;
     }
 
-    public static final Entry IMPACT = entry("impact", 0xAAFFDD);
-    public static final Entry RAPID_FIRE = entry("rapid_fire", 0xB30000);
+    public static final Entry DAMAGE = entry("damage", 0xAAFFDD);
+    public static final Entry HASTE = entry("haste", 0xB30000);
 }

@@ -21,12 +21,12 @@ public class RangedWeaponMod implements ModInitializer {
         ((CustomRangedWeapon) Items.CROSSBOW).setRangedWeaponConfig(RangedConfig.CROSSBOW);
 
         var boostEffectBonusPerLevel = 0.1;
-        StatusEffects_RangedWeapon.IMPACT.effect.addAttributeModifier(
+        StatusEffects_RangedWeapon.DAMAGE.effect.addAttributeModifier(
                 EntityAttributes_RangedWeapon.DAMAGE.attribute,
                 CustomStatusEffect.uuid,
                 boostEffectBonusPerLevel,
                 EntityAttributeModifier.Operation.MULTIPLY_BASE);
-        StatusEffects_RangedWeapon.RAPID_FIRE.effect.addAttributeModifier(
+        StatusEffects_RangedWeapon.HASTE.effect.addAttributeModifier(
                 EntityAttributes_RangedWeapon.HASTE.attribute,
                 CustomStatusEffect.uuid,
                 boostEffectBonusPerLevel,

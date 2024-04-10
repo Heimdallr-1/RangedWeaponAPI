@@ -71,9 +71,11 @@ public class BowItemMixin {
             ItemStack stack, World world, LivingEntity user, int remainingUseTicks) {
         if (entity instanceof PersistentProjectileEntity projectile) {
             var rangedDamage = user.getAttributeValue(EntityAttributes_RangedWeapon.DAMAGE.attribute);
-            var multiplier = ScalingUtil.arrowDamageMultiplier(STANDARD_DAMAGE, rangedDamage, STANDARD_VELOCITY, config().velocity());
-            var finalDamage = projectile.getDamage() * multiplier;
-            projectile.setDamage(finalDamage);
+            if (rangedDamage > 0) {
+                var multiplier = ScalingUtil.arrowDamageMultiplier(STANDARD_DAMAGE, rangedDamage, STANDARD_VELOCITY, config().velocity());
+                var finalDamage = projectile.getDamage() * multiplier;
+                projectile.setDamage(finalDamage);
+            }
         }
         return original.call(world, entity);
     }

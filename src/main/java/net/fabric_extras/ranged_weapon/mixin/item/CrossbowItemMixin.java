@@ -86,12 +86,11 @@ public class CrossbowItemMixin {
         var item = crossbow.getItem();
         if (entity instanceof PersistentProjectileEntity projectileEntity && item instanceof CustomRangedWeapon weapon) {
             var rangedDamage = shooter.getAttributeValue(EntityAttributes_RangedWeapon.DAMAGE.attribute);
-            System.out.println("Ranged Damage: " + rangedDamage);
-            var multiplier = ScalingUtil.arrowDamageMultiplier(STANDARD_DAMAGE, rangedDamage, STANDARD_VELOCITY, weapon.getRangedWeaponConfig().velocity());
-            System.out.println("Multiplier: " + multiplier);
-            var finalDamage = projectileEntity.getDamage() * multiplier;
-            System.out.println("Final Damage: " + finalDamage);
-            projectileEntity.setDamage(finalDamage);
+            if (rangedDamage > 0) {
+                var multiplier = ScalingUtil.arrowDamageMultiplier(STANDARD_DAMAGE, rangedDamage, STANDARD_VELOCITY, weapon.getRangedWeaponConfig().velocity());
+                var finalDamage = projectileEntity.getDamage() * multiplier;
+                projectileEntity.setDamage(finalDamage);
+            }
         }
         return original.call(world, entity);
     }

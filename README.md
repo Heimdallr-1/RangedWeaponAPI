@@ -18,7 +18,11 @@
 ### Attributes
 
 - [x] Ranged Damage attribute
+  - Specifies the damage amount of projectiles, randomized by the same relative amount as vanilla weapons, critical strike mechanic applies the same way
 - [x] Draw Speed attribute
+  - Base value = 100
+  - Example values: 50, -50% attack speed 
+  - Example values: 200, +100% attack speed
 
 ![attribute_haste.png](.github/attribute_haste.png)
 

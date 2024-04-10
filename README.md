@@ -3,6 +3,8 @@
 ### 🏹 Making bows and crossbows has never been easier!
 
 ## Features
+
+### Ranged weapons
 - [x] Bows and Crossbow construction
 - [x] Customizable weapon properties: damage, pull time, projectile velocity (optional)
 - [x] Automatic item model predicate registration (matching vanilla model predicates)
@@ -12,6 +14,18 @@
 - [ ] AI can use these weapons
 
 ![Example](.github/custom_longbow.png)
+
+### Attributes
+
+- [x] Ranged Damage attribute
+- [x] Draw Speed attribute
+
+![attribute_haste.png](.github/attribute_haste.png)
+
+Related status effects included.
+
+![status_effect_damage.png](.github/status_effect_damage.png)
+![status_effect_haste.png](.github/status_effect_haste.png)
 
 ## Try it out
 

@@ -1,4 +1,4 @@
-# 1.1.0
+# 1.1.1
 
 API Changes:
 - BREAKING! - CustomRangedWeapon - Remove internally used get functions

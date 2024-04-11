@@ -2,9 +2,10 @@ package net.fabric_extras.ranged_weapon.client;
 
 import com.ibm.icu.text.DecimalFormat;
 import net.fabric_extras.ranged_weapon.api.CustomRangedWeapon;
+import net.fabric_extras.ranged_weapon.api.EntityAttributes_RangedWeapon;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.item.CrossbowItem;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableTextContent;
 import net.minecraft.util.Formatting;
@@ -48,16 +49,16 @@ public class TooltipUtil {
 
     private static int readablePullTime(ItemStack itemStack) {
         var item = itemStack.getItem();
-        if (item instanceof CrossbowItem) {
-            return CrossbowItem.getPullTime(itemStack);
-        } else {
-            if (itemStack.isOf(Items.BOW)) {
-                return 20;
-            } else if (item instanceof CustomRangedWeapon customBow) {
-                return customBow.getRangedWeaponConfig().pull_time();
-            }
+        double pullTime = 0;
+        if (item instanceof CustomRangedWeapon customBow) {
+            pullTime = customBow.getRangedWeaponConfig().pull_time();
         }
-        return 0;
+        var player = MinecraftClient.getInstance().player;
+        if (player != null && pullTime > 0) {
+            var haste = player.getAttributeValue(EntityAttributes_RangedWeapon.HASTE.attribute);
+            pullTime /= EntityAttributes_RangedWeapon.HASTE.asMultiplier(haste);
+        }
+        return (int) pullTime;
     }
 
     private static String formattedNumber(float number) {

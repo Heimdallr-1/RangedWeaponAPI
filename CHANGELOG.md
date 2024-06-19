@@ -1,3 +1,8 @@
+# 1.1.2
+
+- Update Fabric Loader to 15+ for embedded MixinExtras
+- Add Italian translation, thanks to Zano
+
 # 1.1.1
 
 API Changes:

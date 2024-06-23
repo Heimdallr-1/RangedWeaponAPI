@@ -1,3 +1,7 @@
+# 1.1.3
+
+- Add Spanish translation
+
 # 1.1.2
 
 - Update Fabric Loader to 15+ for embedded MixinExtras

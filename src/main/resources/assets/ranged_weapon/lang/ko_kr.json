@@ -5,5 +5,5 @@
   "item.modifiers.both_hands": "들었을 때:",
   "effect.ranged_weapon.damage": "충격",
   "effect.ranged_weapon.haste": "속사",
-  "item.ranged_weapon.pull_time": "%1$s 초 당김 시간"
+  "item.ranged_weapon.pull_time": "%1$s초 당김 시간"
 }

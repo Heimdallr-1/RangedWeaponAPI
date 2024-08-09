@@ -1,6 +1,7 @@
 # 1.1.3
 
 - Add Spanish translation
+- Update Korean translation
 
 # 1.1.2
 

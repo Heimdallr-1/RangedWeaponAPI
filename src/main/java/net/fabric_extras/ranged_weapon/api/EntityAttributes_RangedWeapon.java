@@ -21,7 +21,7 @@ public class EntityAttributes_RangedWeapon {
         public final EntityAttribute attribute;
         private final double baseValue;
         public Entry(String name, double baseValue, boolean tracked) {
-            this.id = new Identifier(NAMESPACE, name);
+            this.id = Identifier.of(NAMESPACE, name);
             this.translationKey = "attribute.name." + NAMESPACE + "." + name;
             this.attribute = new ClampedEntityAttribute(translationKey, baseValue, 0, 2048).setTracked(tracked);
             this.baseValue = baseValue;

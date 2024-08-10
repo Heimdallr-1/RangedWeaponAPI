@@ -2,6 +2,12 @@ package net.fabric_extras.ranged_weapon.client;
 
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.item.v1.ItemTooltipCallback;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.tooltip.TooltipType;
+import net.minecraft.text.Text;
+
+import java.util.List;
 
 public class RangedWeaponAPIClient implements ClientModInitializer {
     /**
@@ -9,8 +15,8 @@ public class RangedWeaponAPIClient implements ClientModInitializer {
      */
     @Override
     public void onInitializeClient() {
-        ItemTooltipCallback.EVENT.register((itemStack, context, lines) -> {
-            TooltipHelper.updateTooltipText(itemStack, lines);
+        ItemTooltipCallback.EVENT.register((stack, tooltipContext, tooltipType, lines) -> {
+            TooltipHelper.updateTooltipText(stack, lines);
         });
         // Calling these from MinecraftClient run, so all mod registrations are done
 //        for (var bow: CustomBow.instances) {

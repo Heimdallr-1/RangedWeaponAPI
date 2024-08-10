@@ -10,6 +10,7 @@
     "attribute.StatusEffectsMixin",
     "item.BowItemMixin",
     "item.CrossbowItemMixin",
+    "item.ItemSettingMixin",
     "item.RangedWeaponItemMixin"
   ],
   "client": [

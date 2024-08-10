@@ -26,7 +26,7 @@ public abstract class LivingEntityMixin extends Entity {
     )
     private static void addAttributes(final CallbackInfoReturnable<DefaultAttributeContainer.Builder> info) {
         for (var entry : EntityAttributes_RangedWeapon.all) {
-            info.getReturnValue().add(entry.attribute);
+            info.getReturnValue().add(entry.entry);
         }
     }
 
@@ -40,10 +40,10 @@ public abstract class LivingEntityMixin extends Entity {
         if (entity.isUsingItem())  {
             var useAction = activeItemStack.getUseAction();
             if (useAction == UseAction.BOW || useAction == UseAction.CROSSBOW) {
-                var progress = activeItemStack.getMaxUseTime() - value;
-                var haste = entity.getAttributeValue(EntityAttributes_RangedWeapon.HASTE.attribute);
+                var progress = activeItemStack.getMaxUseTime(entity) - value;
+                var haste = entity.getAttributeValue(EntityAttributes_RangedWeapon.HASTE.entry);
                 var newProgress = (int) (progress * EntityAttributes_RangedWeapon.HASTE.asMultiplier((float) haste));
-                info.setReturnValue(activeItemStack.getMaxUseTime() - newProgress);
+                info.setReturnValue(activeItemStack.getMaxUseTime(entity) - newProgress);
             }
         }
     }

@@ -1,20 +1,15 @@
 package net.fabric_extras.ranged_weapon.mixin.item;
 
-import com.llamalad7.mixinextras.injector.WrapWithCondition;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import net.fabric_extras.ranged_weapon.api.CustomRangedWeapon;
-import net.fabric_extras.ranged_weapon.api.EntityAttributes_RangedWeapon;
 import net.fabric_extras.ranged_weapon.api.RangedConfig;
-import net.fabric_extras.ranged_weapon.internal.ScalingUtil;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.projectile.PersistentProjectileEntity;
+import net.fabric_extras.ranged_weapon.internal.ItemSettingsExtension;
 import net.minecraft.item.BowItem;
-import net.minecraft.item.ItemStack;
-import net.minecraft.world.World;
+import net.minecraft.item.Item;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.ModifyVariable;
 
 @Mixin(BowItem.class)
 public class BowItemMixin {
@@ -32,6 +27,15 @@ public class BowItemMixin {
         return f;
     }
 
+    @ModifyVariable(method = "<init>", at = @At("HEAD"), ordinal = 0)
+    private static Item.Settings applyDefaultAttributes(Item.Settings settings) {
+        if ((ItemSettingsExtension) settings instanceof ItemSettingsExtension extension && !extension.hasAttributeModifiers()) {
+            return settings.attributeModifiers(CustomRangedWeapon.createAttributeModifiers(RangedConfig.BOW));
+        } else {
+            return settings;
+        }
+    }
+
     /**
      * Apply custom pull time
      */
@@ -44,39 +48,39 @@ public class BowItemMixin {
         }
     }
 
-    /**
-     * Apply custom velocity
-     */
-    @WrapWithCondition(method = "onStoppedUsing", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/World;spawnEntity(Lnet/minecraft/entity/Entity;)Z"))
-    private boolean applyCustomVelocity(World world, Entity entity) {
-        if (entity instanceof PersistentProjectileEntity projectile) {
-            if (config().velocity() > 0F) {
-                // 3.0F is the default hardcoded velocity of bows
-                projectile.setVelocity(projectile.getVelocity().multiply(config().velocity() / 3.0F));
-            }
-        }
-        return true;
-    }
+//    /**
+//     * Apply custom velocity
+//     */
+//    @WrapWithCondition(method = "onStoppedUsing", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/World;spawnEntity(Lnet/minecraft/entity/Entity;)Z"))
+//    private boolean applyCustomVelocity(World world, Entity entity) {
+//        if (entity instanceof PersistentProjectileEntity projectile) {
+//            if (config().velocity() > 0F) {
+//                // 3.0F is the default hardcoded velocity of bows
+//                projectile.setVelocity(projectile.getVelocity().multiply(config().velocity() / 3.0F));
+//            }
+//        }
+//        return true;
+//    }
 
     /**
      * Apply custom damage
      */
-    private static final float STANDARD_DAMAGE = 6;
-    private static final float STANDARD_VELOCITY = 3.0F;
-    @WrapOperation(method = "onStoppedUsing", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/World;spawnEntity(Lnet/minecraft/entity/Entity;)Z"))
-    private boolean applyCustomDamage(
-            // Mixin parameters
-            World instance, Entity entity, Operation<Boolean> original,
-            // Context parameters
-            ItemStack stack, World world, LivingEntity user, int remainingUseTicks) {
-        if (entity instanceof PersistentProjectileEntity projectile) {
-            var rangedDamage = user.getAttributeValue(EntityAttributes_RangedWeapon.DAMAGE.attribute);
-            if (rangedDamage > 0) {
-                var multiplier = ScalingUtil.arrowDamageMultiplier(STANDARD_DAMAGE, rangedDamage, STANDARD_VELOCITY, config().velocity());
-                var finalDamage = projectile.getDamage() * multiplier;
-                projectile.setDamage(finalDamage);
-            }
-        }
-        return original.call(world, entity);
-    }
+//    private static final float STANDARD_DAMAGE = 6;
+//    private static final float STANDARD_VELOCITY = 3.0F;
+//    @WrapOperation(method = "onStoppedUsing", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/World;spawnEntity(Lnet/minecraft/entity/Entity;)Z"))
+//    private boolean applyCustomDamage(
+//            // Mixin parameters
+//            World instance, Entity entity, Operation<Boolean> original,
+//            // Context parameters
+//            ItemStack stack, World world, LivingEntity user, int remainingUseTicks) {
+//        if (entity instanceof PersistentProjectileEntity projectile) {
+//            var rangedDamage = user.getAttributeValue(EntityAttributes_RangedWeapon.DAMAGE.attribute);
+//            if (rangedDamage > 0) {
+//                var multiplier = ScalingUtil.arrowDamageMultiplier(STANDARD_DAMAGE, rangedDamage, STANDARD_VELOCITY, config().velocity());
+//                var finalDamage = projectile.getDamage() * multiplier;
+//                projectile.setDamage(finalDamage);
+//            }
+//        }
+//        return original.call(world, entity);
+//    }
 }

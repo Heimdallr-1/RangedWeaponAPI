@@ -3,7 +3,11 @@ package net.fabric_extras.ranged_weapon.api;
 import net.fabric_extras.ranged_weapon.internal.CustomStatusEffect;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectCategory;
+import net.minecraft.registry.Registries;
+import net.minecraft.registry.Registry;
+import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.util.Identifier;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 
@@ -13,9 +17,15 @@ public class StatusEffects_RangedWeapon {
         public final Identifier id;
         public final StatusEffect effect;
 
+        @Nullable public RegistryEntry<StatusEffect> entry;
+
         public Entry(String name, int color) {
-            this.id = new Identifier(NAMESPACE, name);
+            this.id = Identifier.of(NAMESPACE, name);
             this.effect = new CustomStatusEffect(StatusEffectCategory.BENEFICIAL, color);
+        }
+
+        public void register() {
+            entry = Registry.registerReference(Registries.STATUS_EFFECT, id, effect);
         }
     }
 

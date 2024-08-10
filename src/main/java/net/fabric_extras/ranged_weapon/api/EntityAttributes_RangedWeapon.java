@@ -2,7 +2,11 @@ package net.fabric_extras.ranged_weapon.api;
 
 import net.minecraft.entity.attribute.ClampedEntityAttribute;
 import net.minecraft.entity.attribute.EntityAttribute;
+import net.minecraft.registry.Registries;
+import net.minecraft.registry.Registry;
+import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.util.Identifier;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 
@@ -19,7 +23,8 @@ public class EntityAttributes_RangedWeapon {
         public final Identifier id;
         public final String translationKey;
         public final EntityAttribute attribute;
-        private final double baseValue;
+        public final double baseValue;
+        @Nullable public RegistryEntry<EntityAttribute> entry;
         public Entry(String name, double baseValue, boolean tracked) {
             this.id = Identifier.of(NAMESPACE, name);
             this.translationKey = "attribute.name." + NAMESPACE + "." + name;
@@ -29,6 +34,10 @@ public class EntityAttributes_RangedWeapon {
 
         public double asMultiplier(double attributeValue) {
             return attributeValue / baseValue;
+        }
+
+        public void register() {
+            entry = Registry.registerReference(Registries.ATTRIBUTE, id, attribute);
         }
     }
 

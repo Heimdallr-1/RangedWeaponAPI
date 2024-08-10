@@ -7,10 +7,10 @@ import net.minecraft.item.ItemStack;
 
 public class ScalingUtil {
 
-    private static final float STANDARD_BOW_VELOCITY = 3F;
-    private static final float STANDARD_BOW_DAMAGE = 6.0F;
-    private static final float STANDARD_CROSSBOW_VELOCITY = 3.15F;
-    private static final float STANDARD_CROSSBOW_DAMAGE = 9.0F;
+    public static final float STANDARD_BOW_VELOCITY = 3F;
+    public static final float STANDARD_BOW_DAMAGE = 6.0F;
+    public static final float STANDARD_CROSSBOW_VELOCITY = 3.15F;
+    public static final float STANDARD_CROSSBOW_DAMAGE = 9.0F;
 
     public static final Scaling BOW_BASELINE = new Scaling(STANDARD_BOW_VELOCITY, STANDARD_BOW_DAMAGE);
     public static final Scaling CROSSBOW_BASELINE = new Scaling(STANDARD_CROSSBOW_VELOCITY, STANDARD_CROSSBOW_DAMAGE);

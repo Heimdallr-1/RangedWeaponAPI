@@ -10,15 +10,15 @@ import java.util.function.Supplier;
 public class CustomBow extends BowItem {
     // Instances are kept a list of, so model predicates can be automatically registered
     public final static HashSet<CustomBow> instances = new HashSet<>();
-    public CustomBow(Settings settings, Supplier<Ingredient> repairIngredientSupplier) {
-        super(settings);
+    public CustomBow(Settings settings, RangedConfig config, Supplier<Ingredient> repairIngredientSupplier) {
+        super(settings.attributeModifiers(CustomRangedWeapon.createAttributeModifiers(config)));
+        ((CustomRangedWeapon) this).configure(config);
         this.repairIngredientSupplier = repairIngredientSupplier;
         instances.add(this);
     }
 
     private final Supplier<Ingredient> repairIngredientSupplier;
 
-    @Deprecated
     public void config(RangedConfig config) {
         ((CustomRangedWeapon) this).configure(config);
     }

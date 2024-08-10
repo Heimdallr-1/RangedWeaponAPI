@@ -2,6 +2,7 @@ package net.fabric_extras.ranged_weapon.client;
 
 import net.fabric_extras.ranged_weapon.api.CustomRangedWeapon;
 import net.fabric_extras.ranged_weapon.api.EntityAttributes_RangedWeapon;
+import net.minecraft.component.type.AttributeModifiersComponent;
 import net.minecraft.entity.attribute.EntityAttributeModifier;
 import net.minecraft.item.ItemStack;
 import net.minecraft.text.Text;
@@ -10,8 +11,6 @@ import net.minecraft.util.Formatting;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static net.minecraft.item.ItemStack.MODIFIER_FORMAT;
 
 public class TooltipHelper {
     public static void updateTooltipText(ItemStack itemStack, List<Text> lines) {
@@ -99,8 +98,10 @@ public class TooltipHelper {
                     // The construction of this line is copied from ItemStack.class
                     var greenAttributeLine = Text.literal(" ")
                             .append(
-                                    Text.translatable("attribute.modifier.equals." + EntityAttributeModifier.Operation.ADDITION.getId(),
-                                            new Object[]{ MODIFIER_FORMAT.format(attributeValue), Text.translatable(attributeTranslationKey)})
+                                    Text.translatable("attribute.modifier.equals." + EntityAttributeModifier.Operation.ADD_VALUE.getId(),
+                                            AttributeModifiersComponent.DECIMAL_FORMAT.format(attributeValue),
+                                            Text.translatable(attributeTranslationKey)
+                                    )
                             )
                             .formatted(Formatting.DARK_GREEN);
                     tooltip.set(i, greenAttributeLine);

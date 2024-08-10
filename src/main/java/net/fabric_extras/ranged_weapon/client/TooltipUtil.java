@@ -55,7 +55,7 @@ public class TooltipUtil {
         }
         var player = MinecraftClient.getInstance().player;
         if (player != null && pullTime > 0) {
-            var haste = player.getAttributeValue(EntityAttributes_RangedWeapon.HASTE.attribute);
+            var haste = player.getAttributeValue(EntityAttributes_RangedWeapon.HASTE.entry);
             pullTime /= EntityAttributes_RangedWeapon.HASTE.asMultiplier(haste);
         }
         return (int) pullTime;

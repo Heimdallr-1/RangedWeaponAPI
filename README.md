@@ -81,19 +81,16 @@ dependencies {
 5. Done!
 
 ```java
-var bow = new CustomBow(
-        new FabricItemSettings().maxDamage(300),
+    var bow = new CustomBow(
+        new Item.Settings().maxDamage(300),
+        new RangedConfig(30, 9, 0),
         () -> Ingredient.ofItems(Items.GOLD_INGOT)
-);
-bow.config(new RangedConfig(
-        30,     // Pull time in ticks 
-        9,      // Damage
-        null)); // Projectile velocity (optional)
-Registry.register(
+    );
+    Registry.register(
         Registries.ITEM,
-        new Identifier(NAMESPACE, "custom_longbow"),
+        Identifier.of(NAMESPACE, "custom_longbow"), 
         bow
-);
+    );
 ```
 
 Check out the [example mod](src/testmod/java/net/testmod/TestMod.java).

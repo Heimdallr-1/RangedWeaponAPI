@@ -30,7 +30,7 @@ public class RangedWeaponMod implements ModInitializer {
                 EntityAttributeModifier.Operation.ADD_MULTIPLIED_BASE);
         StatusEffects_RangedWeapon.HASTE.effect.addAttributeModifier(
                 EntityAttributes_RangedWeapon.HASTE.entry,
-                Identifier.of(NAMESPACE, "effect.damage"),
+                Identifier.of(NAMESPACE, "effect.haste"),
                 boostEffectBonusPerLevel,
                 EntityAttributeModifier.Operation.ADD_MULTIPLIED_BASE);
     }

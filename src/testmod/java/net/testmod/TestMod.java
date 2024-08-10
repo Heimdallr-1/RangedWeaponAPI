@@ -22,7 +22,6 @@ public class TestMod implements ModInitializer {
                 new RangedConfig(30, 9, 0),
                 () -> Ingredient.ofItems(Items.GOLD_INGOT)
         );
-        bow.configure(new RangedConfig(30, 9, 0));
         Registry.register(
                 Registries.ITEM,
                 Identifier.of(NAMESPACE, "custom_longbow"),

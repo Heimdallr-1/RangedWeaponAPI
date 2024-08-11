@@ -26,7 +26,7 @@
   - Example values: 50, -50% attack speed 
   - Example values: 200, +100% attack speed
 
-`/give @s leather_helmet{AttributeModifiers:[{AttributeName:"ranged_weapon:haste", Name:"testing", Amount:0.1, Operation:1,Slot:"head",UUID:[I; 66453, 79497594, -201177, -16957605]}]} 1`
+`/give @a minecraft:leather_helmet[attribute_modifiers={modifiers:[{type:"ranged_weapon:haste",amount:0.2,slot:head,id:"armor_head_bonus",operation:add_multiplied_base}]}]`
 
 ![attribute_haste.png](.github/attribute_haste.png)
 

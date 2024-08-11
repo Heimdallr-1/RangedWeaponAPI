@@ -1,7 +1,6 @@
 package net.fabric_extras.ranged_weapon.api;
 
 import net.fabric_extras.ranged_weapon.internal.ScalingUtil;
-import org.jetbrains.annotations.Nullable;
 
 /**
  * Represents the configurable properties of ranged weapons.

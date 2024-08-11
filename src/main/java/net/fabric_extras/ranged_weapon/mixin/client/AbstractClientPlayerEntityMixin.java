@@ -2,8 +2,8 @@ package net.fabric_extras.ranged_weapon.mixin.client;
 
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
-import net.fabric_extras.ranged_weapon.api.CustomRangedWeapon;
 import net.fabric_extras.ranged_weapon.api.CustomBow;
+import net.fabric_extras.ranged_weapon.api.CustomRangedWeapon;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;

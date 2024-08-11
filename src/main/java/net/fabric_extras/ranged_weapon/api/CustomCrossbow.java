@@ -1,6 +1,5 @@
 package net.fabric_extras.ranged_weapon.api;
 
-import net.minecraft.component.type.AttributeModifiersComponent;
 import net.minecraft.item.CrossbowItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.recipe.Ingredient;

@@ -47,40 +47,4 @@ public class BowItemMixin {
             return original.call(ticks);
         }
     }
-
-//    /**
-//     * Apply custom velocity
-//     */
-//    @WrapWithCondition(method = "onStoppedUsing", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/World;spawnEntity(Lnet/minecraft/entity/Entity;)Z"))
-//    private boolean applyCustomVelocity(World world, Entity entity) {
-//        if (entity instanceof PersistentProjectileEntity projectile) {
-//            if (config().velocity() > 0F) {
-//                // 3.0F is the default hardcoded velocity of bows
-//                projectile.setVelocity(projectile.getVelocity().multiply(config().velocity() / 3.0F));
-//            }
-//        }
-//        return true;
-//    }
-
-    /**
-     * Apply custom damage
-     */
-//    private static final float STANDARD_DAMAGE = 6;
-//    private static final float STANDARD_VELOCITY = 3.0F;
-//    @WrapOperation(method = "onStoppedUsing", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/World;spawnEntity(Lnet/minecraft/entity/Entity;)Z"))
-//    private boolean applyCustomDamage(
-//            // Mixin parameters
-//            World instance, Entity entity, Operation<Boolean> original,
-//            // Context parameters
-//            ItemStack stack, World world, LivingEntity user, int remainingUseTicks) {
-//        if (entity instanceof PersistentProjectileEntity projectile) {
-//            var rangedDamage = user.getAttributeValue(EntityAttributes_RangedWeapon.DAMAGE.attribute);
-//            if (rangedDamage > 0) {
-//                var multiplier = ScalingUtil.arrowDamageMultiplier(STANDARD_DAMAGE, rangedDamage, STANDARD_VELOCITY, config().velocity());
-//                var finalDamage = projectile.getDamage() * multiplier;
-//                projectile.setDamage(finalDamage);
-//            }
-//        }
-//        return original.call(world, entity);
-//    }
 }

@@ -2,12 +2,6 @@ package net.fabric_extras.ranged_weapon.client;
 
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.item.v1.ItemTooltipCallback;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.tooltip.TooltipType;
-import net.minecraft.text.Text;
-
-import java.util.List;
 
 public class RangedWeaponAPIClient implements ClientModInitializer {
     /**

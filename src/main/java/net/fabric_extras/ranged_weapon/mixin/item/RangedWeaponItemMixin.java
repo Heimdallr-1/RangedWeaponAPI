@@ -2,12 +2,16 @@ package net.fabric_extras.ranged_weapon.mixin.item;
 
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
+import net.fabric_extras.ranged_weapon.api.AttributeModifierIDs;
 import net.fabric_extras.ranged_weapon.api.CustomRangedWeapon;
 import net.fabric_extras.ranged_weapon.api.EntityAttributes_RangedWeapon;
 import net.fabric_extras.ranged_weapon.api.RangedConfig;
-import net.fabric_extras.ranged_weapon.internal.CustomRangedWeaponInternal;
+import net.fabric_extras.ranged_weapon.internal.RangedItemSettings;
 import net.fabric_extras.ranged_weapon.internal.ScalingUtil;
+import net.minecraft.component.type.AttributeModifierSlot;
+import net.minecraft.component.type.AttributeModifiersComponent;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.attribute.EntityAttributeModifier;
 import net.minecraft.entity.projectile.PersistentProjectileEntity;
 import net.minecraft.entity.projectile.ProjectileEntity;
 import net.minecraft.item.Item;
@@ -15,19 +19,59 @@ import net.minecraft.item.RangedWeaponItem;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.ModifyVariable;
 
 @Mixin(RangedWeaponItem.class)
-abstract class RangedWeaponItemMixin extends Item implements CustomRangedWeapon, CustomRangedWeaponInternal {
+abstract class RangedWeaponItemMixin extends Item implements CustomRangedWeapon {
     private RangedConfig rangedWeaponConfig = RangedConfig.BOW;
 
     RangedWeaponItemMixin(Settings settings) {
         super(settings);
     }
 
-    // CustomRangedWeaponInternal
+    @ModifyVariable(method = "<init>", at = @At("HEAD"), ordinal = 0)
+    private static Item.Settings applyDefaultAttributes(Item.Settings settings) {
+        var attributes = ((RangedItemSettings) settings).getRangedAttributes();
+        if (attributes != null) {
+            return settings.attributeModifiers(createAttributeModifiers(attributes));
+        } else {
+            return settings;
+        }
+    }
 
-    public void setRangedWeaponConfig(RangedConfig config) {
-        this.rangedWeaponConfig = config;
+    private static AttributeModifiersComponent createAttributeModifiers(RangedConfig config) {
+        var damage = new EntityAttributeModifier(
+                AttributeModifierIDs.WEAPON_DAMAGE_ID,
+                config.damage(),
+                EntityAttributeModifier.Operation.ADD_VALUE);
+
+        var pullTime = new EntityAttributeModifier(
+                AttributeModifierIDs.WEAPON_PULL_TIME_ID,
+                config.pull_time_bonus(),
+                EntityAttributeModifier.Operation.ADD_VALUE);
+
+        return AttributeModifiersComponent.builder()
+                .add(
+                        EntityAttributes_RangedWeapon.DAMAGE.entry,
+                        damage,
+                        AttributeModifierSlot.MAINHAND
+                )
+                .add(
+                        EntityAttributes_RangedWeapon.DAMAGE.entry,
+                        damage,
+                        AttributeModifierSlot.OFFHAND
+                )
+                .add(
+                        EntityAttributes_RangedWeapon.PULL_TIME.entry,
+                        pullTime,
+                        AttributeModifierSlot.MAINHAND
+                )
+                .add(
+                        EntityAttributes_RangedWeapon.PULL_TIME.entry,
+                        pullTime,
+                        AttributeModifierSlot.OFFHAND
+                )
+                .build();
     }
 
     // CustomRangedWeapon
@@ -58,7 +102,6 @@ abstract class RangedWeaponItemMixin extends Item implements CustomRangedWeapon,
             speed *= velocityMultiplier;
         }
         original.call(instance, shooter, projectile, index, speed, divergence, yaw, target);
-
 
         CustomRangedWeapon weapon = this;
         if (projectile instanceof PersistentProjectileEntity projectileEntity) {

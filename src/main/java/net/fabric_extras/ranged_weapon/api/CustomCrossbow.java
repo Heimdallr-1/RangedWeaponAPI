@@ -1,6 +1,6 @@
 package net.fabric_extras.ranged_weapon.api;
 
-import net.fabric_extras.ranged_weapon.internal.CustomRangedWeaponInternal;
+import net.fabric_extras.ranged_weapon.internal.RangedItemSettings;
 import net.minecraft.item.CrossbowItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.recipe.Ingredient;
@@ -13,8 +13,9 @@ public class CustomCrossbow extends CrossbowItem {
     public final static HashSet<CustomCrossbow> instances = new HashSet<>();
 
     public CustomCrossbow(Settings settings, RangedConfig config, Supplier<Ingredient> repairIngredientSupplier) {
-        super(settings.attributeModifiers(CustomRangedWeapon.createAttributeModifiers(config)));
-        ((CustomRangedWeaponInternal) this).setRangedWeaponConfig(config);
+        super(
+                ((RangedItemSettings)settings).rangedAttributes(config)
+        );
         this.repairIngredientSupplier = repairIngredientSupplier;
         instances.add(this);
     }

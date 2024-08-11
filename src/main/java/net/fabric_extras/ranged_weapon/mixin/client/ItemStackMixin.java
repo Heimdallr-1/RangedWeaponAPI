@@ -1,5 +1,6 @@
 package net.fabric_extras.ranged_weapon.mixin.client;
 
+import net.fabric_extras.ranged_weapon.api.AttributeModifierIDs;
 import net.fabric_extras.ranged_weapon.api.EntityAttributes_RangedWeapon;
 import net.minecraft.component.type.AttributeModifiersComponent;
 import net.minecraft.entity.attribute.EntityAttribute;
@@ -26,11 +27,13 @@ public class ItemStackMixin {
             CallbackInfo ci) {
         // do something
         if (attribute == EntityAttributes_RangedWeapon.DAMAGE.entry
+                && modifier.idMatches(AttributeModifierIDs.WEAPON_DAMAGE_ID)
                 && modifier.operation().equals(EntityAttributeModifier.Operation.ADD_VALUE)) {
             addGreenText(textConsumer, attribute, modifier, modifier.value());
             ci.cancel();
         }
         if (attribute == EntityAttributes_RangedWeapon.PULL_TIME.entry
+                && modifier.idMatches(AttributeModifierIDs.WEAPON_PULL_TIME_ID)
                 && modifier.operation().equals(EntityAttributeModifier.Operation.ADD_VALUE)) {
             var value = modifier.value() + player.getAttributeBaseValue(EntityAttributes_RangedWeapon.PULL_TIME.entry);
             addGreenText(textConsumer, attribute, modifier, value);

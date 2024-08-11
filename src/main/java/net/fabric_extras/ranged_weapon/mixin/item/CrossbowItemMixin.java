@@ -3,7 +3,7 @@ package net.fabric_extras.ranged_weapon.mixin.item;
 import net.fabric_extras.ranged_weapon.api.CustomRangedWeapon;
 import net.fabric_extras.ranged_weapon.api.EntityAttributes_RangedWeapon;
 import net.fabric_extras.ranged_weapon.api.RangedConfig;
-import net.fabric_extras.ranged_weapon.internal.ItemSettingsExtension;
+import net.fabric_extras.ranged_weapon.internal.RangedItemSettings;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.CrossbowItem;
@@ -21,8 +21,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public class CrossbowItemMixin {
     @ModifyVariable(method = "<init>", at = @At("HEAD"), ordinal = 0)
     private static Item.Settings applyDefaultAttributes(Item.Settings settings) {
-        if ((ItemSettingsExtension) settings instanceof ItemSettingsExtension extension && !extension.hasAttributeModifiers()) {
-            return settings.attributeModifiers(CustomRangedWeapon.createAttributeModifiers(RangedConfig.CROSSBOW));
+        if (((RangedItemSettings) settings).getRangedAttributes() == null) {
+            return ((RangedItemSettings) settings).rangedAttributes(RangedConfig.CROSSBOW);
         } else {
             return settings;
         }

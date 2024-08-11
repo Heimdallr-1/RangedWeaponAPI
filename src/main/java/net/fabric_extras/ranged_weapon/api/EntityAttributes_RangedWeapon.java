@@ -14,7 +14,10 @@ public class EntityAttributes_RangedWeapon {
     public static final String NAMESPACE = "ranged_weapon";
     public static final ArrayList<Entry> all = new ArrayList<>();
     private static Entry entry(String name, double baseValue, boolean tracked) {
-        var entry = new Entry(name, baseValue, tracked);
+        return entry(name, 0, baseValue, tracked);
+    }
+    private static Entry entry(String name, double minValue, double baseValue, boolean tracked) {
+        var entry = new Entry(name, minValue, baseValue, tracked);
         all.add(entry);
         return entry;
     }
@@ -25,10 +28,11 @@ public class EntityAttributes_RangedWeapon {
         public final EntityAttribute attribute;
         public final double baseValue;
         @Nullable public RegistryEntry<EntityAttribute> entry;
-        public Entry(String name, double baseValue, boolean tracked) {
+
+        public Entry(String name, double minValue, double baseValue, boolean tracked) {
             this.id = Identifier.of(NAMESPACE, name);
             this.translationKey = "attribute.name." + NAMESPACE + "." + name;
-            this.attribute = new ClampedEntityAttribute(translationKey, baseValue, 0, 2048).setTracked(tracked);
+            this.attribute = new ClampedEntityAttribute(translationKey, baseValue, minValue, 2048).setTracked(tracked);
             this.baseValue = baseValue;
         }
 
@@ -42,6 +46,6 @@ public class EntityAttributes_RangedWeapon {
     }
 
     public static final Entry DAMAGE = entry("damage", 0, true);
-    public static final Entry PULL_TIME = entry("pull_time", 1, true);
+    public static final Entry PULL_TIME = entry("pull_time", 0.1, 1.0, true);
     public static final Entry HASTE = entry("haste", 100, true);
 }

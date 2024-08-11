@@ -2,10 +2,9 @@ package net.fabric_extras.ranged_weapon.mixin.item;
 
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
-import net.fabric_extras.ranged_weapon.api.CustomRangedWeapon;
 import net.fabric_extras.ranged_weapon.api.EntityAttributes_RangedWeapon;
 import net.fabric_extras.ranged_weapon.api.RangedConfig;
-import net.fabric_extras.ranged_weapon.internal.ItemSettingsExtension;
+import net.fabric_extras.ranged_weapon.internal.RangedItemSettings;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.BowItem;
 import net.minecraft.item.Item;
@@ -17,10 +16,6 @@ import org.spongepowered.asm.mixin.injection.ModifyVariable;
 
 @Mixin(BowItem.class)
 public class BowItemMixin {
-//    private RangedConfig config() {
-//        return ((CustomRangedWeapon) this).getRangedWeaponConfig();
-//    }
-
     public float getPullProgress_RWA(int useTicks, LivingEntity user) {
         var pullTime = user.getAttributeValue(EntityAttributes_RangedWeapon.PULL_TIME.entry);
         var pullTimeTicks = Math.round(pullTime * 20);
@@ -34,8 +29,8 @@ public class BowItemMixin {
 
     @ModifyVariable(method = "<init>", at = @At("HEAD"), ordinal = 0)
     private static Item.Settings applyDefaultAttributes(Item.Settings settings) {
-        if ((ItemSettingsExtension) settings instanceof ItemSettingsExtension extension && !extension.hasAttributeModifiers()) {
-            return settings.attributeModifiers(CustomRangedWeapon.createAttributeModifiers(RangedConfig.BOW));
+        if (((RangedItemSettings) settings).getRangedAttributes() == null) {
+            return ((RangedItemSettings) settings).rangedAttributes(RangedConfig.BOW);
         } else {
             return settings;
         }

@@ -19,7 +19,7 @@ public class TestMod implements ModInitializer {
     public void onInitialize() {
         var bow = new CustomBow(
                 new Item.Settings().maxDamage(300),
-                new RangedConfig(0.5F, 9, 0),
+                new RangedConfig(9, 0.5F, 0),
                 () -> Ingredient.ofItems(Items.GOLD_INGOT)
         );
         Registry.register(

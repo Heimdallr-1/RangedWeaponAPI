@@ -1,10 +1,8 @@
 package net.fabric_extras.ranged_weapon.client;
 
 import net.fabric_extras.ranged_weapon.api.CustomRangedWeapon;
-import net.fabric_extras.ranged_weapon.api.EntityAttributes_RangedWeapon;
-import net.minecraft.component.type.AttributeModifiersComponent;
-import net.minecraft.entity.attribute.EntityAttributeModifier;
 import net.minecraft.item.ItemStack;
+import net.minecraft.text.PlainTextContent;
 import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableTextContent;
 import net.minecraft.util.Formatting;
@@ -16,9 +14,7 @@ public class TooltipHelper {
     public static void updateTooltipText(ItemStack itemStack, List<Text> lines) {
         if (itemStack.getItem() instanceof CustomRangedWeapon) {
             mergeAttributeLines_MainHandOffHand(lines);
-            // replaceAttributeLines_BlueWithGreen(lines);
         }
-        // TooltipUtil.addPullTime(itemStack, lines);
     }
 
     private static void mergeAttributeLines_MainHandOffHand(List<Text> tooltip) {
@@ -28,6 +24,15 @@ public class TooltipHelper {
         for (int i = 0; i < tooltip.size(); i++) {
             var line = tooltip.get(i);
             var content = line.getContent();
+
+            // Skip first whitespace
+            if (content instanceof PlainTextContent plainTextContent && plainTextContent.string().equals(" ")) {
+                var next = line.getSiblings().getFirst();
+                if (next != null) {
+                    content = next.getContent();
+                }
+            }
+
             if (content instanceof TranslatableTextContent translatableText) {
                 if (translatableText.getKey().startsWith("item.modifiers")) {
                     heldInHandLines.add(line);

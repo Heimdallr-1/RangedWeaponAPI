@@ -23,8 +23,6 @@ import org.spongepowered.asm.mixin.injection.ModifyVariable;
 
 @Mixin(RangedWeaponItem.class)
 abstract class RangedWeaponItemMixin extends Item implements CustomRangedWeapon {
-    private RangedConfig rangedWeaponConfig = RangedConfig.BOW;
-
     RangedWeaponItemMixin(Settings settings) {
         super(settings);
     }
@@ -50,7 +48,7 @@ abstract class RangedWeaponItemMixin extends Item implements CustomRangedWeapon 
                 config.pull_time_bonus(),
                 EntityAttributeModifier.Operation.ADD_VALUE);
 
-        return AttributeModifiersComponent.builder()
+        var builder = AttributeModifiersComponent.builder()
                 .add(
                         EntityAttributes_RangedWeapon.DAMAGE.entry,
                         damage,
@@ -70,15 +68,30 @@ abstract class RangedWeaponItemMixin extends Item implements CustomRangedWeapon 
                         EntityAttributes_RangedWeapon.PULL_TIME.entry,
                         pullTime,
                         AttributeModifierSlot.OFFHAND
-                )
-                .build();
+                );
+
+        if (config.velocity_bonus() > 0) {
+            var velocity = new EntityAttributeModifier(
+                    AttributeModifierIDs.WEAPON_VELOCITY_ID,
+                    config.velocity_bonus(),
+                    EntityAttributeModifier.Operation.ADD_VALUE);
+            builder
+                .add(
+                        EntityAttributes_RangedWeapon.VELOCITY.entry,
+                        velocity,
+                        AttributeModifierSlot.MAINHAND
+                ).add(
+                        EntityAttributes_RangedWeapon.VELOCITY.entry,
+                        velocity,
+                        AttributeModifierSlot.OFFHAND
+                );
+        }
+
+
+        return builder.build();
     }
 
     // CustomRangedWeapon
-
-    public RangedConfig getRangedWeaponConfig() {
-        return this.rangedWeaponConfig;
-    }
 
     private RangedConfig typeBaseLine = RangedConfig.BOW;
 
@@ -96,18 +109,16 @@ abstract class RangedWeaponItemMixin extends Item implements CustomRangedWeapon 
     private void applyCustomVelocity_RWA(
             RangedWeaponItem instance, LivingEntity shooter, ProjectileEntity projectile, int index, float speed, float divergence, float yaw, @Nullable LivingEntity target,
             Operation<Void> original) {
-        var velocity = getRangedWeaponConfig().velocity();
-        if (velocity > 0) {
-            var velocityMultiplier = (float) ScalingUtil.arrowVelocityMultiplier(getTypeBaseline().velocity(), getRangedWeaponConfig().velocity());
-            speed *= velocityMultiplier;
-        }
+        var bonusVelocity = shooter.getAttributeValue(EntityAttributes_RangedWeapon.VELOCITY.entry);
+        var velocityMultiplier = ScalingUtil.arrowVelocityMultiplier(instance, bonusVelocity);
+        System.out.println("Velocity multiplier: " + velocityMultiplier);
+        speed *= (float) velocityMultiplier;
         original.call(instance, shooter, projectile, index, speed, divergence, yaw, target);
 
-        CustomRangedWeapon weapon = this;
         if (projectile instanceof PersistentProjectileEntity projectileEntity) {
             var rangedDamage = shooter.getAttributeValue(EntityAttributes_RangedWeapon.DAMAGE.entry);
             if (rangedDamage > 0) {
-                var multiplier = ScalingUtil.arrowDamageMultiplier(getTypeBaseline().damage(), rangedDamage, getTypeBaseline().velocity(), weapon.getRangedWeaponConfig().velocity());
+                var multiplier = ScalingUtil.arrowDamageMultiplier(getTypeBaseline().damage(), rangedDamage, velocityMultiplier);
                 var finalDamage = projectileEntity.getDamage() * multiplier;
                 projectileEntity.setDamage(finalDamage);
             }

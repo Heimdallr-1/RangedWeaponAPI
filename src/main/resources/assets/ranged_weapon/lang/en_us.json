@@ -2,6 +2,7 @@
   "attribute.name.ranged_weapon.damage" : "Ranged Damage",
   "attribute.name.ranged_weapon.haste" : "Draw Speed",
   "attribute.name.ranged_weapon.pull_time" : "sec Pull Time",
+  "attribute.name.ranged_weapon.velocity" : "Arrow Velocity",
   "item.modifiers.both_hands": "When Held:",
   "effect.ranged_weapon.damage": "Impact",
   "effect.ranged_weapon.haste": "Rapid Fire",

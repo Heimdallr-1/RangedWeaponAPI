@@ -1,8 +1,8 @@
 package net.fabric_extras.ranged_weapon.internal;
 
-import net.fabric_extras.ranged_weapon.api.CustomRangedWeapon;
 import net.minecraft.item.BowItem;
 import net.minecraft.item.CrossbowItem;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
 public class ScalingUtil {
@@ -17,38 +17,42 @@ public class ScalingUtil {
 
     public record Scaling(double velocity, double damage) { }
 
-    public static Scaling scaling(ItemStack itemStack, double damage) {
-        var item = itemStack.getItem();
-        Scaling baseline;
+//    public static Scaling scaling(Item item, double bonusVelocity, double damage) {
+//        var baseline = baselineFor(item);
+//
+//        double velocityMultiplier = 1;
+//        if (customVelocity > 0) {
+//            velocityMultiplier = arrowVelocityMultiplier(baseline.velocity, customVelocity);
+//        }
+//        var damageMultiplier = arrowDamageMultiplier(baseline.damage, damage, baseline.velocity, 0);
+//        return new Scaling(velocityMultiplier, damageMultiplier);
+//    }
+
+    public static Scaling baselineFor(Item item) {
         if (item instanceof BowItem) {
-            baseline = BOW_BASELINE;
+            return BOW_BASELINE;
         } else if (item instanceof CrossbowItem) {
-            baseline = CROSSBOW_BASELINE;
+            return CROSSBOW_BASELINE;
         } else {
             return new Scaling(1, 1);
         }
-
-        double velocityMultiplier = 1;
-        if (item instanceof CustomRangedWeapon rangedWeapon) {
-            var customVelocity = rangedWeapon.getRangedWeaponConfig().velocity();
-            if (customVelocity > 0) {
-                velocityMultiplier = arrowVelocityMultiplier(baseline.velocity, customVelocity);
-            }
-        }
-        var damageMultiplier = arrowDamageMultiplier(baseline.damage, damage, baseline.velocity, 0);
-        return new Scaling(velocityMultiplier, damageMultiplier);
     }
 
     public static double arrowVelocityMultiplier(double standardVelocity, double customVelocity) {
         return customVelocity / standardVelocity;
     }
 
-    public static double arrowDamageMultiplier(double standardDamage, double attributeDamage, double standardVelocity, double customVelocity) {
+    public static double arrowVelocityMultiplier(Item item, double bonusVelocity) {
+        var baseline = baselineFor(item);
+        return (baseline.velocity() + bonusVelocity) / baseline.velocity();
+    }
+
+    public static double arrowDamageMultiplier(double standardDamage, double attributeDamage, double velocityMultiplier) {
         // Boost damage based on the attribute
         var multiplier = (attributeDamage / standardDamage);
-        if (customVelocity > 0) {
+        if (velocityMultiplier != 1) {
             // Counteract the damage boost by caused by non-standard velocity
-            multiplier *= (standardVelocity / customVelocity);
+            multiplier /= velocityMultiplier;
         }
         return multiplier;
     }

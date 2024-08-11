@@ -7,10 +7,6 @@ import net.minecraft.util.Identifier;
 
 public interface CustomRangedWeapon {
     RangedConfig getRangedWeaponConfig();
-    void setRangedWeaponConfig(RangedConfig config);
-    default void configure(RangedConfig config) {
-        setRangedWeaponConfig(config);
-    }
 
     // Sets the baseline configuration for the weapon, multipliers are calculated compared to this
     // Already configured for known weapon types, such as BOW and CROSSBOW

@@ -4,6 +4,7 @@ import net.fabric_extras.ranged_weapon.api.CustomRangedWeapon;
 import net.fabric_extras.ranged_weapon.api.EntityAttributes_RangedWeapon;
 import net.fabric_extras.ranged_weapon.api.RangedConfig;
 import net.fabric_extras.ranged_weapon.api.StatusEffects_RangedWeapon;
+import net.fabric_extras.ranged_weapon.internal.CustomRangedWeaponInternal;
 import net.fabricmc.api.ModInitializer;
 import net.minecraft.entity.attribute.EntityAttributeModifier;
 import net.minecraft.item.Items;
@@ -18,8 +19,8 @@ public class RangedWeaponMod implements ModInitializer {
      */
     @Override
     public void onInitialize() {
-        ((CustomRangedWeapon) Items.BOW).setRangedWeaponConfig(RangedConfig.BOW);
-        ((CustomRangedWeapon) Items.CROSSBOW).setRangedWeaponConfig(RangedConfig.CROSSBOW);
+        ((CustomRangedWeaponInternal) Items.BOW).setRangedWeaponConfig(RangedConfig.BOW);
+        ((CustomRangedWeaponInternal) Items.CROSSBOW).setRangedWeaponConfig(RangedConfig.CROSSBOW);
 
         var boostEffectBonusPerLevel = 0.1;
 

@@ -52,11 +52,12 @@ public class TooltipUtil {
         if (item instanceof CustomRangedWeapon customBow) {
             pullTime = customBow.getRangedWeaponConfig().pull_time();
         }
-        var player = MinecraftClient.getInstance().player;
-        if (player != null && pullTime > 0) {
-            var haste = player.getAttributeValue(EntityAttributes_RangedWeapon.HASTE.entry);
-            pullTime /= EntityAttributes_RangedWeapon.HASTE.asMultiplier(haste);
-        }
+        // Don't calculate haste for now, it would be inconsistent with showing damage without modifiers
+//        var player = MinecraftClient.getInstance().player;
+//        if (player != null && pullTime > 0) {
+//            var haste = player.getAttributeValue(EntityAttributes_RangedWeapon.HASTE.entry);
+//            pullTime /= EntityAttributes_RangedWeapon.HASTE.asMultiplier(haste);
+//        }
         return (int) pullTime;
     }
 

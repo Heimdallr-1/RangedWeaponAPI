@@ -5,6 +5,7 @@ import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import net.fabric_extras.ranged_weapon.api.CustomRangedWeapon;
 import net.fabric_extras.ranged_weapon.api.EntityAttributes_RangedWeapon;
 import net.fabric_extras.ranged_weapon.api.RangedConfig;
+import net.fabric_extras.ranged_weapon.internal.CustomRangedWeaponInternal;
 import net.fabric_extras.ranged_weapon.internal.ScalingUtil;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.projectile.PersistentProjectileEntity;
@@ -16,19 +17,23 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 
 @Mixin(RangedWeaponItem.class)
-abstract class RangedWeaponItemMixin extends Item implements CustomRangedWeapon {
+abstract class RangedWeaponItemMixin extends Item implements CustomRangedWeapon, CustomRangedWeaponInternal {
     private RangedConfig rangedWeaponConfig = RangedConfig.BOW;
 
     RangedWeaponItemMixin(Settings settings) {
         super(settings);
     }
 
-    public RangedConfig getRangedWeaponConfig() {
-        return this.rangedWeaponConfig;
-    }
+    // CustomRangedWeaponInternal
 
     public void setRangedWeaponConfig(RangedConfig config) {
         this.rangedWeaponConfig = config;
+    }
+
+    // CustomRangedWeapon
+
+    public RangedConfig getRangedWeaponConfig() {
+        return this.rangedWeaponConfig;
     }
 
     private RangedConfig typeBaseLine = RangedConfig.BOW;

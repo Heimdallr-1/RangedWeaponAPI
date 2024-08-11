@@ -26,7 +26,7 @@
   - Example values: 50, -50% attack speed 
   - Example values: 200, +100% attack speed
 
-`/give @a minecraft:leather_helmet[attribute_modifiers={modifiers:[{type:"ranged_weapon:haste",amount:0.2,slot:head,id:"armor_head_bonus",operation:add_multiplied_base}]}]`
+`/give @p minecraft:leather_helmet[attribute_modifiers={modifiers:[{type:"ranged_weapon:haste",amount:0.2,slot:head,id:"armor_head_bonus",operation:add_multiplied_base}]}]`
 
 ![attribute_haste.png](.github/attribute_haste.png)
 
@@ -81,16 +81,16 @@ dependencies {
 5. Done!
 
 ```java
-    var bow = new CustomBow(
-        new Item.Settings().maxDamage(300),
-        new RangedConfig(30, 9, 0),
-        () -> Ingredient.ofItems(Items.GOLD_INGOT)
-    );
-    Registry.register(
-        Registries.ITEM,
-        Identifier.of(NAMESPACE, "custom_longbow"), 
-        bow
-    );
+var bow = new CustomBow(
+    new Item.Settings().maxDamage(300),
+    new RangedConfig(30, 9, 0),
+    () -> Ingredient.ofItems(Items.GOLD_INGOT)
+);
+Registry.register(
+    Registries.ITEM,
+    Identifier.of(NAMESPACE, "custom_longbow"), 
+    bow
+);
 ```
 
 Check out the [example mod](src/testmod/java/net/testmod/TestMod.java).

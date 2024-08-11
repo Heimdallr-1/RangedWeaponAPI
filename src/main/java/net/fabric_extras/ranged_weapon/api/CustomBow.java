@@ -1,5 +1,6 @@
 package net.fabric_extras.ranged_weapon.api;
 
+import net.fabric_extras.ranged_weapon.internal.CustomRangedWeaponInternal;
 import net.minecraft.item.BowItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.recipe.Ingredient;
@@ -12,19 +13,12 @@ public class CustomBow extends BowItem {
     public final static HashSet<CustomBow> instances = new HashSet<>();
     public CustomBow(Settings settings, RangedConfig config, Supplier<Ingredient> repairIngredientSupplier) {
         super(settings.attributeModifiers(CustomRangedWeapon.createAttributeModifiers(config)));
-        ((CustomRangedWeapon) this).configure(config);
+        ((CustomRangedWeaponInternal) this).setRangedWeaponConfig(config);
         this.repairIngredientSupplier = repairIngredientSupplier;
         instances.add(this);
     }
 
     private final Supplier<Ingredient> repairIngredientSupplier;
-
-    public void config(RangedConfig config) {
-        ((CustomRangedWeapon) this).configure(config);
-    }
-    public void configure(RangedConfig config) {
-        ((CustomRangedWeapon) this).setRangedWeaponConfig(config);
-    }
 
     @Override
     public boolean canRepair(ItemStack stack, ItemStack ingredient) {

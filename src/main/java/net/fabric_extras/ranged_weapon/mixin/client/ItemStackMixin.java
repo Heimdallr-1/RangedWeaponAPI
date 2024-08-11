@@ -25,19 +25,20 @@ public class ItemStackMixin {
     private void customFormattedAttributes_RWA(
             Consumer<Text> textConsumer, @Nullable PlayerEntity player, RegistryEntry<EntityAttribute> attribute, EntityAttributeModifier modifier,
             CallbackInfo ci) {
-        // do something
-        if (attribute == EntityAttributes_RangedWeapon.DAMAGE.entry
-                && modifier.idMatches(AttributeModifierIDs.WEAPON_DAMAGE_ID)
-                && modifier.operation().equals(EntityAttributeModifier.Operation.ADD_VALUE)) {
-            addGreenText(textConsumer, attribute, modifier, modifier.value());
-            ci.cancel();
-        }
-        if (attribute == EntityAttributes_RangedWeapon.PULL_TIME.entry
-                && modifier.idMatches(AttributeModifierIDs.WEAPON_PULL_TIME_ID)
-                && modifier.operation().equals(EntityAttributeModifier.Operation.ADD_VALUE)) {
-            var value = modifier.value() + player.getAttributeBaseValue(EntityAttributes_RangedWeapon.PULL_TIME.entry);
-            addGreenText(textConsumer, attribute, modifier, value);
-            ci.cancel();
+        if (player != null) {
+            if (attribute == EntityAttributes_RangedWeapon.DAMAGE.entry
+                    && modifier.idMatches(AttributeModifierIDs.WEAPON_DAMAGE_ID)
+                    && modifier.operation().equals(EntityAttributeModifier.Operation.ADD_VALUE)) {
+                addGreenText(textConsumer, attribute, modifier, modifier.value());
+                ci.cancel();
+            }
+            if (attribute == EntityAttributes_RangedWeapon.PULL_TIME.entry
+                    && modifier.idMatches(AttributeModifierIDs.WEAPON_PULL_TIME_ID)
+                    && modifier.operation().equals(EntityAttributeModifier.Operation.ADD_VALUE)) {
+                var value = modifier.value() + player.getAttributeBaseValue(EntityAttributes_RangedWeapon.PULL_TIME.entry);
+                addGreenText(textConsumer, attribute, modifier, value);
+                ci.cancel();
+            }
         }
     }
 

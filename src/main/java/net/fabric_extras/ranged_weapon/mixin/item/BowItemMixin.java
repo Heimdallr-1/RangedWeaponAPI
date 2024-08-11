@@ -19,6 +19,7 @@ public class BowItemMixin {
     public float getPullProgress_RWA(int useTicks, LivingEntity user) {
         var pullTime = user.getAttributeValue(EntityAttributes_RangedWeapon.PULL_TIME.entry);
         var pullTimeTicks = Math.round(pullTime * 20);
+        System.out.println("Bow Pull time: " + pullTimeTicks);
         float f = (float)useTicks / pullTimeTicks;
         f = (f * f + f * 2.0F) / 3.0F;
         if (f > 1.0F) {

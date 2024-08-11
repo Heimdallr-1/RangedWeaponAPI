@@ -32,12 +32,6 @@ public class AbstractClientPlayerEntityMixin {
     @ModifyConstant(method = "getFovMultiplier", constant = @Constant(floatValue = 20.0F))
     private float getFovMultiplier_CustomBows_PullTime(float value) {
         var player = (AbstractClientPlayerEntity)(Object)this;
-        var item = player.getActiveItem().getItem();
-        if (CustomBow.instances.contains(item)) {
-            // Override hardcoded pull time
-            return (float)player.getAttributeValue(EntityAttributes_RangedWeapon.PULL_TIME.entry) * 20F;
-        } else {
-            return value;
-        }
+        return (float)player.getAttributeValue(EntityAttributes_RangedWeapon.PULL_TIME.entry) * 20F;
     }
 }

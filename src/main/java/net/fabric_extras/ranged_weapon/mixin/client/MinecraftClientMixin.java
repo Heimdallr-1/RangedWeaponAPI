@@ -4,6 +4,7 @@ import net.fabric_extras.ranged_weapon.api.CustomBow;
 import net.fabric_extras.ranged_weapon.api.CustomCrossbow;
 import net.fabric_extras.ranged_weapon.client.ModelPredicateHelper;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.item.Items;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -16,6 +17,7 @@ public class MinecraftClientMixin {
         for (var bow: CustomBow.instances) {
             ModelPredicateHelper.registerBowModelPredicates(bow);
         }
+        ModelPredicateHelper.registerBowModelPredicates(Items.BOW);
         for (var crossbow: CustomCrossbow.instances) {
             ModelPredicateHelper.registerCrossbowModelPredicates(crossbow);
         }

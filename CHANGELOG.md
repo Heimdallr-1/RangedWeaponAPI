@@ -1,3 +1,10 @@
+# 2.0.0
+
+- Update to Minecraft 1.21
+- Add new attributes, previously stored internally within item instances, now fully adjustable via item attribute component:
+  - `ranged_weapon:pull_time`
+  - `ranged_weapon:haste`
+
 # 1.1.3
 
 - Add Spanish translation

@@ -2,6 +2,7 @@ package net.fabric_extras.ranged_weapon.mixin.client;
 
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
+import net.fabric_extras.ranged_weapon.api.CustomBow;
 import net.fabric_extras.ranged_weapon.api.CustomCrossbow;
 import net.minecraft.client.render.entity.PlayerEntityRenderer;
 import net.minecraft.item.Item;
@@ -24,6 +25,11 @@ public class PlayerEntityRendererMixin {
     private static boolean armPose_crossbowHold_RWA(ItemStack itemStack, Item item, Operation<Boolean> original) {
         if (item == Items.CROSSBOW) {
             if (CustomCrossbow.instances.contains(itemStack.getItem())) {
+                return true;
+            }
+        }
+        if (item == Items.BOW) {
+            if (CustomBow.instances.contains(itemStack.getItem())) {
                 return true;
             }
         }

@@ -42,5 +42,6 @@ public class EntityAttributes_RangedWeapon {
     }
 
     public static final Entry DAMAGE = entry("damage", 0, true);
+    public static final Entry PULL_TIME = entry("pull_time", 1, true);
     public static final Entry HASTE = entry("haste", 100, true);
 }

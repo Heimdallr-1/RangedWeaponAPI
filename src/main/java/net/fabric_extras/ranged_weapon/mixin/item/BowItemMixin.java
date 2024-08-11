@@ -3,23 +3,28 @@ package net.fabric_extras.ranged_weapon.mixin.item;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import net.fabric_extras.ranged_weapon.api.CustomRangedWeapon;
+import net.fabric_extras.ranged_weapon.api.EntityAttributes_RangedWeapon;
 import net.fabric_extras.ranged_weapon.api.RangedConfig;
 import net.fabric_extras.ranged_weapon.internal.ItemSettingsExtension;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.BowItem;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
 
 @Mixin(BowItem.class)
 public class BowItemMixin {
-    private RangedConfig config() {
-        return ((CustomRangedWeapon) this).getRangedWeaponConfig();
-    }
+//    private RangedConfig config() {
+//        return ((CustomRangedWeapon) this).getRangedWeaponConfig();
+//    }
 
-    public float getPullProgress_RWA(int useTicks) {
-        float pullTime = config().pull_time() > 0 ? config().pull_time() : 20;
-        float f = (float)useTicks / pullTime;
+    public float getPullProgress_RWA(int useTicks, LivingEntity user) {
+        var pullTime = user.getAttributeValue(EntityAttributes_RangedWeapon.PULL_TIME.entry);
+        var pullTimeTicks = Math.round(pullTime * 20);
+        float f = (float)useTicks / pullTimeTicks;
         f = (f * f + f * 2.0F) / 3.0F;
         if (f > 1.0F) {
             f = 1.0F;
@@ -39,12 +44,15 @@ public class BowItemMixin {
     /**
      * Apply custom pull time
      */
-    @WrapOperation(method = "onStoppedUsing", at = @At(value = "INVOKE", target = "Lnet/minecraft/item/BowItem;getPullProgress(I)F"))
-    private float applyCustomPullTime(int ticks, Operation<Float> original) {
-        if (config().pull_time() > 0) {
-            return getPullProgress_RWA(ticks);
-        } else {
-            return original.call(ticks);
-        }
+    @WrapOperation(
+            method = "onStoppedUsing",
+            at = @At(value = "INVOKE", target = "Lnet/minecraft/item/BowItem;getPullProgress(I)F")
+    )
+    private float applyCustomPullTime(
+            // Mixin parameters
+            int ticks, Operation<Float> original,
+            // Context parameters
+            ItemStack stack, World world, LivingEntity user, int remainingUseTicks) {
+        return getPullProgress_RWA(ticks, user);
     }
 }

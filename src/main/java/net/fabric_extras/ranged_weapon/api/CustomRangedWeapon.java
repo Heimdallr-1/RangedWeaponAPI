@@ -17,14 +17,37 @@ public interface CustomRangedWeapon {
     RangedConfig getTypeBaseline();
 
     static AttributeModifiersComponent createAttributeModifiers(RangedConfig config) {
+
+        var damage = new EntityAttributeModifier(
+                Identifier.of("ranged_weapon", "weapon_damage"),
+                config.damage(),
+                EntityAttributeModifier.Operation.ADD_VALUE);
+
+        var pullTime = new EntityAttributeModifier(
+                Identifier.of("ranged_weapon", "weapon_pull_time"),
+                config.pull_time_diff(),
+                EntityAttributeModifier.Operation.ADD_VALUE);
+
         return AttributeModifiersComponent.builder()
                 .add(
                         EntityAttributes_RangedWeapon.DAMAGE.entry,
-                        new EntityAttributeModifier(
-                                Identifier.of("ranged_weapon", "base_attack_damage"),
-                                config.damage(),
-                                EntityAttributeModifier.Operation.ADD_VALUE),
+                        damage,
                         AttributeModifierSlot.MAINHAND
+                )
+                .add(
+                        EntityAttributes_RangedWeapon.DAMAGE.entry,
+                        damage,
+                        AttributeModifierSlot.OFFHAND
+                )
+                .add(
+                        EntityAttributes_RangedWeapon.PULL_TIME.entry,
+                        pullTime,
+                        AttributeModifierSlot.MAINHAND
+                )
+                .add(
+                        EntityAttributes_RangedWeapon.PULL_TIME.entry,
+                        pullTime,
+                        AttributeModifierSlot.OFFHAND
                 )
                 .build();
     }

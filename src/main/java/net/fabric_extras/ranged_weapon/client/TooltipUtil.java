@@ -49,9 +49,9 @@ public class TooltipUtil {
     private static int readablePullTime(ItemStack itemStack) {
         var item = itemStack.getItem();
         double pullTime = 0;
-        if (item instanceof CustomRangedWeapon customBow) {
-            pullTime = customBow.getRangedWeaponConfig().pull_time();
-        }
+//        if (item instanceof CustomRangedWeapon customBow) {
+//            pullTime = customBow.getRangedWeaponConfig().pull_time();
+//        }
         // Don't calculate haste for now, it would be inconsistent with showing damage without modifiers
 //        var player = MinecraftClient.getInstance().player;
 //        if (player != null && pullTime > 0) {

@@ -4,6 +4,7 @@ import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import net.fabric_extras.ranged_weapon.api.CustomBow;
 import net.fabric_extras.ranged_weapon.api.CustomRangedWeapon;
+import net.fabric_extras.ranged_weapon.api.EntityAttributes_RangedWeapon;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -30,10 +31,11 @@ public class AbstractClientPlayerEntityMixin {
 
     @ModifyConstant(method = "getFovMultiplier", constant = @Constant(floatValue = 20.0F))
     private float getFovMultiplier_CustomBows_PullTime(float value) {
-        var item = ((AbstractClientPlayerEntity)(Object)this).getActiveItem().getItem();
+        var player = (AbstractClientPlayerEntity)(Object)this;
+        var item = player.getActiveItem().getItem();
         if (CustomBow.instances.contains(item)) {
             // Override hardcoded pull time
-            return ((CustomRangedWeapon)item).getRangedWeaponConfig().pull_time();
+            return (float)player.getAttributeValue(EntityAttributes_RangedWeapon.PULL_TIME.entry) * 20F;
         } else {
             return value;
         }

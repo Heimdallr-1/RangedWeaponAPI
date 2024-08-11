@@ -1,6 +1,7 @@
 package net.fabric_extras.ranged_weapon.mixin.item;
 
 import net.fabric_extras.ranged_weapon.api.CustomRangedWeapon;
+import net.fabric_extras.ranged_weapon.api.EntityAttributes_RangedWeapon;
 import net.fabric_extras.ranged_weapon.api.RangedConfig;
 import net.fabric_extras.ranged_weapon.internal.ItemSettingsExtension;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -18,20 +19,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(CrossbowItem.class)
 public class CrossbowItemMixin {
-    private RangedConfig config() {
-        return ((CustomRangedWeapon) this).getRangedWeaponConfig();
-    }
-
-    public float getPullProgress_RWA(int useTicks) {
-        float pullTime = config().pull_time() > 0 ? config().pull_time() : 25;
-        float f = (float)useTicks / pullTime;
-        f = (f * f + f * 2.0F) / 3.0F;
-        if (f > 1.0F) {
-            f = 1.0F;
-        }
-        return f;
-    }
-
     @ModifyVariable(method = "<init>", at = @At("HEAD"), ordinal = 0)
     private static Item.Settings applyDefaultAttributes(Item.Settings settings) {
         if ((ItemSettingsExtension) settings instanceof ItemSettingsExtension extension && !extension.hasAttributeModifiers()) {
@@ -53,14 +40,11 @@ public class CrossbowItemMixin {
     private static void applyCustomPullTime_RWA(ItemStack stack, LivingEntity user, CallbackInfoReturnable<Integer> cir) {
         var item = stack.getItem();
         if (item instanceof CustomRangedWeapon weapon) {
-            float pullTime = weapon.getRangedWeaponConfig().pull_time() / 20f;
+            var pullTime = (float) user.getAttributeValue(EntityAttributes_RangedWeapon.PULL_TIME.entry);
             float f = EnchantmentHelper.getCrossbowChargeTime(stack, user, pullTime);
-            pullTime = MathHelper.floor(f * 20.0F);
-//            if (pullTime > 0) {
-//                pullTime = CrossbowMechanics.PullTime.modifier.getPullTime(pullTime, stack, user);
-                cir.setReturnValue((int) pullTime);
-                cir.cancel();
-//            }
+            var pullTimeTicks = MathHelper.floor(f * 20.0F);
+            cir.setReturnValue(pullTimeTicks);
+            cir.cancel();
         }
     }
 }

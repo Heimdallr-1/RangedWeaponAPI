@@ -1,3 +1,7 @@
+# 1.1.4
+
+- Restore haste effect icon
+
 # 1.1.3
 
 - Add Spanish translation

@@ -1,3 +1,7 @@
+# 2.0.2
+
+- Remove console spam
+
 # 2.0.1
 
 - Update to Minecraft 1.21.1

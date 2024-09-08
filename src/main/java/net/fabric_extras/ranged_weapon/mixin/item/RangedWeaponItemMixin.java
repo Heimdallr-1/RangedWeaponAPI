@@ -111,7 +111,7 @@ abstract class RangedWeaponItemMixin extends Item implements CustomRangedWeapon 
             Operation<Void> original) {
         var bonusVelocity = shooter.getAttributeValue(EntityAttributes_RangedWeapon.VELOCITY.entry);
         var velocityMultiplier = ScalingUtil.arrowVelocityMultiplier(instance, bonusVelocity);
-        System.out.println("Velocity multiplier: " + velocityMultiplier);
+//        System.out.println("Velocity multiplier: " + velocityMultiplier);
         speed *= (float) velocityMultiplier;
         original.call(instance, shooter, projectile, index, speed, divergence, yaw, target);
 

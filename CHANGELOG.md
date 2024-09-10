@@ -1,3 +1,7 @@
+# 2.0.3
+
+- Allow running on 1.21
+
 # 2.0.2
 
 - Remove console spam
